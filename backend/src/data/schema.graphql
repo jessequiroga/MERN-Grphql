@@ -1,0 +1,71 @@
+# Tipos
+
+""" Cliente """
+type Cliente{
+    _id: ID
+    nombre: String
+    apellido: String
+    empresa: String
+    correos: [Correo]
+    tipo: TipoCliente
+    pedidos: [Pedido]
+}
+
+""" Pedido """
+type Pedido{
+    producto: String
+    precio: Int
+}
+
+""" Correo """
+type Correo {
+    correo: String
+}
+
+
+# Inputs
+
+""" Cliente Input """
+input ClienteInput{
+    nombre: String!
+    apellido: String!
+    empresa: String
+    correos: [CorreoInput]
+    tipo: TipoCliente
+    pedidos: [PedidoInput]
+}
+
+""" Pedido Input """
+input PedidoInput{
+    producto: String
+    precio: Int
+}
+
+""" Correo Input """
+input CorreoInput {
+    correo: String
+}
+
+""" Tipo Cliente Enum """
+enum TipoCliente {
+    BASICO
+    PREMIUM
+}
+
+# Query
+
+""" Queries """
+type Query{
+    """ Get de cliente """
+    obtenerClientes(limite: Int): [Cliente]
+}
+
+# Mutation
+
+""" Mutations """
+type Mutation{
+    """ Crear cliente """
+    crearCliente(input: ClienteInput): Cliente
+    actualizarCliente(id: ID, input: ClienteInput): Cliente
+    eliminarCliente(id: ID): Cliente
+}
