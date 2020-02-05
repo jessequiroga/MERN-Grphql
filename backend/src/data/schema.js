@@ -1,12 +1,67 @@
-import resolvers from './resolvers';
 import { importSchema } from 'graphql-import';
-import { makeExecutableSchema } from 'graphql-tools';
+import {gql} from 'apollo-server-express';
 
-async function schema() {
-    const typeDefs = await importSchema('src/data/schema.graphql');
-    const schema = makeExecutableSchema({typeDefs, resolvers});
-    return schema;
+const typeDefs = gql`
+# Tipos
 
+type Cliente{
+    _id: ID
+    nombre: String
+    apellido: String
+    empresa: String
+    correos: [Correo]
+    tipo: TipoCliente
+    pedidos: [Pedido]
 }
 
-export default schema;
+type Pedido{
+    producto: String
+    precio: Int
+}
+
+type Correo {
+    correo: String
+}
+
+
+# Inputs
+
+input ClienteInput{
+    nombre: String!
+    apellido: String!
+    empresa: String
+    correos: [CorreoInput]
+    tipo: TipoCliente
+    pedidos: [PedidoInput]
+}
+
+input PedidoInput{
+    producto: String
+    precio: Int
+}
+
+input CorreoInput {
+    correo: String
+}
+
+enum TipoCliente {
+    BASICO
+    PREMIUM
+}
+
+# Query
+
+type Query{
+    getClientes(limite: Int): [Cliente]
+    getCliente(id: ID): Cliente
+}
+
+# Mutation
+
+type Mutation{
+    crearCliente(input: ClienteInput): Cliente
+    actualizarCliente(id: ID, input: ClienteInput): Cliente
+    eliminarCliente(id: ID): Cliente
+}` ;
+
+export default typeDefs;

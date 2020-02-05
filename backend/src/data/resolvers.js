@@ -14,10 +14,12 @@ class ClienteC {
 
 const ClientesResolver = {
     Query: {
-        obtenerClientes: async(_, { limite }) => {
+        getClientes: async(_, { limite }) => {
             return await Cliente.find().limit(limite);
+        },
+        getCliente: async(_, { id }) => {
+            return await Cliente.findById(id);
         }
-
     },
     Mutation: {
         crearCliente: async (_, {input}) => {
