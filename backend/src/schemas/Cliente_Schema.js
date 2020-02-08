@@ -1,7 +1,6 @@
-import { importSchema } from 'graphql-import';
-import {gql} from 'apollo-server-express';
+import { gql } from 'apollo-server-express';
 
-const typeDefs = gql`
+const Cliente_Schema = gql`
 # Tipos
 
 type Cliente{
@@ -62,6 +61,7 @@ type Mutation{
     crearCliente(input: ClienteInput): Cliente
     actualizarCliente(id: ID, input: ClienteInput): Cliente
     eliminarCliente(id: ID): Cliente
-}` ;
+}
+`;
 
-export default typeDefs;
+export default Cliente_Schema;
