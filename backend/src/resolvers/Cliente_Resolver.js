@@ -11,7 +11,6 @@ const Cliente_Resolver = {
     },
     Mutation: {
         crearCliente: async (_, {input}) => {
-            console.log('Holaaa');
             const newCliente = new Cliente(input);
             return await newCliente.save();
         },
