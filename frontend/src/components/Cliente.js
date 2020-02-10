@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import { Link } from 'react-router-dom'; 
 import { useQuery } from '@apollo/react-hooks';
 import QUERY from '../queries';
 
@@ -19,9 +20,9 @@ const Cliente = () => {
                         {`${cliente.nombre} ${cliente.apellido} - ${cliente.empresa}`}
                         </div>
                         <div className="col-md-4 d-flex justify-content-end">
-                            <a href="###" className="btn btn-success d-block d-md-inline-block">
+                            <Link to={`/cliente/editar/${cliente._id}`} className="btn btn-success d-block d-md-inline-block">
                                 Editar Cliente
-                            </a>
+                            </Link>
                         </div>
                     </div>
                     

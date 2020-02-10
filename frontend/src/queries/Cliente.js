@@ -14,6 +14,8 @@ const GET_CLIENTES_QUERY = gql`
     getClientes(limite:5){
     _id
     nombre
+    apellido
+    empresa
   }
 }
 `;

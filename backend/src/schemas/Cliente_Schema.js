@@ -3,7 +3,7 @@ import { gql } from 'apollo-server-express';
 const Cliente_Schema = gql`
 # Tipos
 
-type Cliente{
+type Cliente {
     _id: ID
     nombre: String
     apellido: String
@@ -13,7 +13,7 @@ type Cliente{
     pedidos: [Pedido]
 }
 
-type Pedido{
+type Pedido {
     producto: String
     precio: Int
 }
@@ -25,7 +25,7 @@ type Correo {
 
 # Inputs
 
-input ClienteInput{
+input ClienteInput {
     nombre: String!
     apellido: String!
     empresa: String
@@ -34,7 +34,7 @@ input ClienteInput{
     pedidos: [PedidoInput]
 }
 
-input PedidoInput{
+input PedidoInput {
     producto: String
     precio: Int
 }
@@ -50,14 +50,14 @@ enum TipoCliente {
 
 # Query
 
-type Query{
+type Query {
     getClientes(limite: Int): [Cliente]
     getCliente(id: ID): Cliente
 }
 
 # Mutation
 
-type Mutation{
+type Mutation {
     crearCliente(input: ClienteInput): Cliente
     actualizarCliente(id: ID, input: ClienteInput): Cliente
     eliminarCliente(id: ID): Cliente
