@@ -5,7 +5,17 @@ const CREAR_CLIENTE = QUERY.Cliente.crearCliente;
 
 const NuevoCliente = () => {
 
-	const [cliente, setCliente] = useState(null);
+	const [cliente, setCliente] = useState({
+		nombre: '',
+		apellido: '',
+		empresa: '',
+		edad: '',
+		correo: '',
+		tipo: ''
+	});
+
+	const [error, updateError] = useState(false);
+
 	const [addCliente, { data }] = useMutation(CREAR_CLIENTE);
 
 	const addData = e => {
@@ -13,13 +23,26 @@ const NuevoCliente = () => {
 			...cliente,
 			[e.target.name]: e.target.value
 		});
+
 	}
 
 	const saveData = e => {
 		e.preventDefault();
+		if ( checkFields('nombre') || checkFields('apellido') || checkFields('empresa') || checkFields('edad') || checkFields('tipo')) {
+			updateError(true);
+			return;
+		}
 		cliente.edad = Number(cliente.edad);
 		addCliente({variables: { input: cliente }});
 	}
+
+	const checkFields = (campo) => {
+		let res;
+		(cliente[campo] === '' ) ? res = true : res = false;
+		return res;
+	}
+
+	let respuesta = (error) ? <p className="alert alert-danger p-3 text-center"> Todos los campos son obligatorios </p> : '';
 
 	/*
 
@@ -41,8 +64,10 @@ const NuevoCliente = () => {
 	return (
 		<Fragment>
 			<h1 className="text-center">Nuevo Cliente</h1>
+
+			{respuesta}
+
 			<div className="row justify-content-center">
-				
 				<form className="col-md-8 m-3" onSubmit={saveData}>
 					<div className="form-row">
 						<div className="form-group col-md-6">
