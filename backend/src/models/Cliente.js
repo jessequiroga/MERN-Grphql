@@ -4,7 +4,8 @@ const ClienteSchema = new Schema({
     nombre: String,
     apellido: String,
     empresa: String,
-    correos: Array,
+    edad: Number,
+    correo: String,
     tipo: String,
     pedidos: Array
 });
