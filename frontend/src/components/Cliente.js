@@ -4,7 +4,9 @@ import { useQuery } from '@apollo/react-hooks';
 import QUERY from '../queries';
 
 const Cliente = () => {
-    const { loading, error, data } = useQuery(QUERY.Cliente.GET_CLIENTES_QUERY);
+    const { loading, error, data, startPolling, stopPolling } = useQuery(QUERY.Cliente.GET_CLIENTES_QUERY, {
+        pollInterval: 500
+    });
 
     if (loading) return "Cargando...";
     if (error) return `Error ${error.message}`;

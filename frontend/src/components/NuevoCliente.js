@@ -1,4 +1,5 @@
 import React, { Fragment, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import QUERY from '../mutations';
 import { useMutation } from '@apollo/react-hooks';
 const CREAR_CLIENTE = QUERY.Cliente.crearCliente;
@@ -14,9 +15,15 @@ const NuevoCliente = () => {
 		tipo: ''
 	});
 
+	const [correos, setCorreo] = useState([]);
+
 	const [error, updateError] = useState(false);
 
-	const [addCliente, { data }] = useMutation(CREAR_CLIENTE);
+	let history = useHistory();
+
+	const [addCliente, { data }] = useMutation(CREAR_CLIENTE, {
+		onCompleted: () => history.push('/')
+	});
 
 	const addData = e => {
 		setCliente({
@@ -25,21 +32,32 @@ const NuevoCliente = () => {
 		});
 
 	}
-
+	
 	const saveData = e => {
 		e.preventDefault();
+		
 		if ( checkFields('nombre') || checkFields('apellido') || checkFields('empresa') || checkFields('edad') || checkFields('tipo')) {
 			updateError(true);
 			return;
 		}
 		cliente.edad = Number(cliente.edad);
-		addCliente({variables: { input: cliente }});
+		addCliente({
+			variables: { input: cliente },
+			
+		});
 	}
 
 	const checkFields = (campo) => {
 		let res;
 		(cliente[campo] === '' ) ? res = true : res = false;
 		return res;
+	}
+
+	const addCorreo = () => {
+		setCorreo([
+			...correos,
+			{correo:"dd"}
+		]);
 	}
 
 	let respuesta = (error) ? <p className="alert alert-danger p-3 text-center"> Todos los campos son obligatorios </p> : '';
@@ -82,15 +100,21 @@ const NuevoCliente = () => {
 						</div>
 					</div>
 					<div className="form-row">
-						<div className="form-group col-md-6">
+						<div className="form-group col-md-12">
 							<label>Empresa</label>
 							<input type="text" className="form-control" name="empresa" placeholder="Empresa" 
 							onChange={addData}/>
 						</div>
-						<div className="form-group col-md-6">
-							<label>Email</label>
-							<input type="email" className="form-control" name="correo" placeholder="Correo" 
-							onChange={addData}/>
+						{correos.map( (input, index) => (
+							<div key={index} className="form-group col-md-12">
+								<label>Correo {index + 1}</label>
+								<input type="text" type="email" placeholder="Correo" className="form-control"/>
+							</div>
+						))}
+						<div className="form-group d-flex justify-content-center col-md-12">
+							<button onClick={addCorreo} type="button" className="btn btn-warning">
+								+ Agregar Correo
+							</button>
 						</div>
 					</div>
 					<div className="form-row">

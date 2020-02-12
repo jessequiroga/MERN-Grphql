@@ -11,7 +11,7 @@ query GetCliente($id: ID!){
 
 const GET_CLIENTES_QUERY = gql`
 {
-    getClientes(limite:5){
+    getClientes(limite:90){
     _id
     nombre
     apellido
